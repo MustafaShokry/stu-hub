@@ -42,10 +42,13 @@ export default function RootLayout({ children }) {
             <AppFooter />
           </Layout> */}
 
-          <Layout className='main-container' style={{ background: '#fff' }}>
+          {/* <Layout className='main-container' style={{ background: '#fff' }}>
             <AppHeader />
-            {children}
-          </Layout>
+            <Content>
+              {children}
+            </Content>
+          </Layout> */}
+          {children}
         </AntdRegistry>
       </body>
     </html>

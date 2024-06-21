@@ -24,7 +24,7 @@ const AppFooter = () => {
         </Col>
       </Row>
       <div style={{ marginTop: '5px' }}>
-        MyApp ©2024 Created by MyCompany
+        Stu-Hub ©2024 Created by MyCompany
       </div>
     </Footer>
   );

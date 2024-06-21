@@ -122,8 +122,9 @@
 
 import React, { useState } from "react";
 import "./SignUp.css";
-// import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import Link from "next/link";
+import { useRouter } from 'next/navigation'
+import axios from "axios";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -135,6 +136,7 @@ const SignUp = () => {
     agree: false
   });
   const [error, setError] = useState("");
+  const router = useRouter();
 
   // const navigate = useNavigate();
 
@@ -159,38 +161,38 @@ const SignUp = () => {
       return;
     }
     // Perform your form submission logic here
-    // console.log("Form data submitted:", formData);
+    console.log("Form data submitted:", formData);
     formData.role = "user";
 
-    // try {
-    //   const response = await axios.post("http://localhost:8000/api/v1/auth/signup", formData);
+    try {
+      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", formData);
 
-    //   if (response.data.errors) {
-    //     setError(response.data.errors[0].msg);
-    //     return;
-    //   }
+      if (response.data.errors) {
+        setError(response.data.errors[0].msg);
+        return;
+      }
 
-    //   console.log("SignUp successful:", response.data);
-    //   localStorage.setItem("token", response.data.token);
-    //   // navigate("/featured");
-    // } catch (error) {
-    //   console.error("There was a problem with the signup request:", error);
-    //   if (error.response && error.response.data && error.response.data.errors) {
-    //     setError(error.response.data.errors[0].msg);
-    //   } else {
-    //     setError("An unexpected error occurred.");
-    //   }
-    // }
+      console.log("SignUp successful:", response.data);
+      localStorage.setItem("token", response.data.token);
+      router.push("/featured");
+    } catch (error) {
+      console.error("There was a problem with the signup request:", error);
+      if (error.response && error.response.data && error.response.data.errors) {
+        setError(error.response.data.errors[0].msg);
+      } else {
+        setError("An unexpected error occurred.");
+      }
+    }
   };
 
   return (
     <div className="signup">
-      <div className="backWhite">
+      {/* <div className="backWhite">
         <div className="logo">
           <i className="fa-solid fa-book-open"></i>
           <h1>STU-HUB</h1>
         </div>
-      </div>
+      </div> */}
       <div className="title">
         <h1>Sign Up</h1>
         <p>Join STU-HUB and start learning</p>
@@ -251,9 +253,6 @@ const SignUp = () => {
           required
         />
         <i className="fa-solid fa-check"></i>
-        <label id="checkbox">
-          I agree with the Terms and Privacy Policy.
-        </label>
         <input
           type="checkbox"
           name="agree"
@@ -261,14 +260,18 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
+        <label id="checkbox" style = {{marginTop:'0px', display:'inline'}}>
+          I agree with the Terms and Privacy Policy.
+        </label>
+        
         <div className="btn">
           <button type="submit">Sign Up</button>
         </div>
         <p id="theEnd">
           Already have an account?{" "}
-          {/* <Link to="/login" className="hover:underline text-[#20A4A0]">
+          <Link href="/login" className="hover:underline text-[#20A4A0]">
             Sign in
-          </Link> */}
+          </Link>
         </p>
       </form>
     </div>

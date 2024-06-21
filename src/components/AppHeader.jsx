@@ -45,7 +45,7 @@ const MyHeader = () => {
       <Image src={logo} alt="logo" width={50} height={50} />
       </div>
       <div style={{ marginRight: '20px', display: 'flex', alignItems: 'center' }}>
-        <Button type="primary" style={{ marginRight: '10px' }}>
+        <Button type="primary" style={{ marginRight: '10px', backgroundColor:'#0cd09f' }} >
           Action
         </Button>
         <Dropdown overlay={UserMenu} trigger={['click']}>

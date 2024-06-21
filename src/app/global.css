@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset default styles */
 * {
     margin: 0;
@@ -8,7 +12,7 @@
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    background-color: #fff;
     color: #333;
     height: 100vh;
 }
@@ -19,6 +23,10 @@ body {
 
 .ant-menu {
     height: 100%;
+}
+
+section {
+    width: fit-content;
 }
 
 /* Add your custom styles here */
