@@ -265,7 +265,7 @@ const SignUp = () => {
           I agree with the Terms and Privacy Policy.
         </label>
         
-        <div className="btn">
+        <div className="mylgbtn">
           <button type="submit">Sign Up</button>
         </div>
         <p id="theEnd">

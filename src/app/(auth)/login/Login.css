@@ -96,7 +96,7 @@ input[type = "checkbox"] {
     font-size: 16px;
     color: black;
 }
-form .btn button {
+form .mylgbtn button {
     position: relative;
     left: 50%;
     transform: translateX(-50%);
@@ -114,7 +114,7 @@ form .btn button {
     cursor: pointer;
     transition: 0.3s;
 }
-form .btn button:hover {
+form .mylgbtn button:hover {
     background-color: transparent;
     color:#0cd09f;
 }
@@ -234,7 +234,7 @@ input[type = "checkbox"] {
     top: 20px;
 
 }
-form .btn button {
+form .mylgbtn button {
     position: relative;
     left: 50%;
     top: 20px;
@@ -253,7 +253,7 @@ form .btn button {
     cursor: pointer;
     transition: 0.3s;
 }
-form .btn button:hover {
+form .mylgbtn button:hover {
     background-color: transparent;
     color:#0cd09f;
 }

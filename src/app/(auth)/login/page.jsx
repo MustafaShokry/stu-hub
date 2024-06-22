@@ -43,7 +43,7 @@
 
 // export default Login;
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -57,7 +57,6 @@ const Login = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -133,7 +132,7 @@ const Login = () => {
         />
         <br />
         <i className="fa-solid fa-lock"></i>
-        <div className="btn">
+        <div className="mylgbtn">
           <button type="submit">Login</button>
         </div>
         <p className="font-bold" id="theEnd">

@@ -116,7 +116,7 @@ function AppSider() {
     
 
     return (
-        <Sider>
+        <Sider style={{height:'100%' }}>
             <Menu
                 onClick={onClick}
                 defaultSelectedKeys={['1']}

@@ -1,4 +1,5 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Layout, FloatButton } from 'antd'
 import AppSider from '@/components/AppSider';
@@ -6,7 +7,7 @@ import AppHeader from '@/components/AppHeader';
 import AppFooter from '@/components/AppFooter';
 import LHeader from '@/components/LHeader';
 import LFooter from '@/components/LFooter';
-
+import { useRouter } from 'next/navigation'
 
 const { Header, Content, Sider, Footer } = Layout
 
@@ -16,18 +17,30 @@ const { Header, Content, Sider, Footer } = Layout
 // }
 
 export default function RootLayout({ children }) {
+
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!localStorage.getItem('token')) {
+            router.push('/login');
+        }
+    }
+    , [router]);
+
     return (
         <Layout className='main-container' >
-            <Header style={{ padding: '0 10px' }}>
-                <AppHeader />
-            </Header>
+
+            <AppHeader />
+
             <Layout style={{ height: '100%', overflow: 'auto' }}>
                 <AppSider style={{ height: '100%', overflow: 'auto' }} />
                 <Content style={{ height: '100%', overflow: 'auto' }}>
                     {children}
                 </Content>
             </Layout>
-
+            {/* <Footer style={{ padding: 0, }}>
+                <LFooter />
+            </Footer> */}
         </Layout>
     )
 }

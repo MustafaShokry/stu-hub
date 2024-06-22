@@ -8,32 +8,44 @@ import Link from 'next/link'
 import logo from '../../public/logo.png';
 const { Header } = Layout;
 
-const UserMenu = () => (
-  <Menu>
-    <Menu.Item key="profile">
-      <UserOutlined />
-      Profile
-    </Menu.Item>
-    <Menu.Item key="settings">
-      <SettingOutlined />
-      Settings
-    </Menu.Item>
-    <Menu.Item key="logout">
-      <LogoutOutlined />
-      Logout
-    </Menu.Item>
-  </Menu>
-);
+
 
 const MyHeader = () => {
   const [username, setUsernamea] = useState('');
   const [role, setRole] = useState('');
   const router = useRouter();
 
+  const UserMenu = () => (
+    <Menu>
+      <Menu.Item key="profile">
+        <UserOutlined />
+        Profile
+      </Menu.Item>
+      <Menu.Item key="settings">
+        <SettingOutlined />
+        Settings
+      </Menu.Item>
+      <Menu.Item key="logout" onClick={
+        () => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          router.replace('/login');
+          router.refresh();
+        }
+      }>
+        <LogoutOutlined />
+        Logout
+      </Menu.Item>
+    </Menu>
+  );
+
   useEffect(() => {
+    // if (!localStorage.getItem('token')) {
+    //   router.push('/login');
+    // }
     setUsernamea(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).username : '');
     setRole(localStorage.getItem('user') ? (JSON.parse(localStorage.getItem('user')).role) : '');
-  }, []);
+  }, [router]);
 
   return (
     <Header className="site-layout-background" style={{ padding: 0, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
