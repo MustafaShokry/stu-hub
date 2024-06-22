@@ -1,4 +1,5 @@
 import React from 'react'
+import "./Lheader.css"
 import Image from 'next/image'
 import logo from '../../Assets/imgs/logo.png'
 import Link from 'next/link'
@@ -29,7 +30,9 @@ function LHeader() {
 
               <Link
                 href="/signUp"
-                className="text-white bg-[#11ab9e] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0  focus:outline-none">
+                className="text-white bg-[#11ab9e]  font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0 
+                  hover:bg-[#0fd0c8] dark:bg-[#11ab9e] dark:hover:bg-[#0fd0c8] dark:text-white dark:hover:text-white
+                ">
                 Sign Up
               </Link>
               <button
@@ -68,7 +71,8 @@ function LHeader() {
                 <li>
                   <Link
                     href="/"
-                    className="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                    className="block py-2 pl-3 pr-4 text-white rounded lg:bg-transparent  lg:p-0 dark:text-white"
+                    
                     aria-current="page">
                     Home
                   </Link>

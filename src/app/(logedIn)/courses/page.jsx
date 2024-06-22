@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Empty, Typography, Spin } from 'antd';
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -11,6 +12,7 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     Aos.init({
@@ -61,9 +63,10 @@ const Courses = () => {
           <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-y-10 gap-x-6 mt-10 mb-5 w-fit mx-auto justify-items-center justify-center">
             {courses.map((course) => (
               <div
+                onClick={() => router.push(`/courses/${course._id}`)}
                 key={course._id}
-                className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300 hover:scale-105 hover:shadow-xl">
-                <a data-aos="fade-up" href="#">
+                className="bg-white shadow-md rounded-xl overflow-hidden transition duration-200 hover:scale-105  hover:shadow-lg hover:cursor-pointer">
+                <div data-aos="fade-up" href="#">
                   <div className="relative h-40">
                     <Image
                       src={course.imageCover || "default_image_path.jpg"}
@@ -101,7 +104,7 @@ const Courses = () => {
                       </Link>
                     </div>
                   </div>
-                </a>
+                </div>
               </div>
             ))}
           </section>
