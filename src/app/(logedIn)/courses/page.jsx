@@ -55,59 +55,14 @@ const Courses = () => {
         </div>
       ) : (
         <>
-          <section
-            className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+          {/* <Typography.Title level={2} className="text-center mt-10">
+            Courses
+          </Typography.Title> */}
+          <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-y-10 gap-x-6 mt-10 mb-5 w-fit mx-auto justify-items-center justify-center">
             {courses.map((course) => (
               <div
                 key={course._id}
-                className="w-72 bg-gray-100 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                <a data-aos="fade-up" href="#">
-                  <div >
-                    <Image
-                      src={course.imageCover || "default_image_path.jpg"} // Use default image if course.image is not available
-                      alt={course.title}
-                      width={288}
-                      height={162}
-                      className="h-80 w-72 object-cover rounded-t-xl"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <span className="text-gray-400 text-xs uppercase mb-2">
-                      Brand
-                    </span>
-                    <p className="text-lg font-bold text-black truncate capitalize mb-2">
-                      {course.title}
-                    </p>
-                    <div className="flex items-center mb-2">
-                      <p className="text-lg font-semibold text-black cursor-auto">
-                        ${course.price}
-                      </p>
-                      {/* <del className="text-sm text-gray-600 ml-2">
-                      ${course.originalPrice}
-                    </del> */}
-                    </div>
-                    <div className="flex justify-end">
-                      <Link
-                        href="/cart"
-                        className="bg-[#0fd0c8] px-3 py-2 rounded text-black hover:text-white mr-2">
-                        Add to Cart
-                      </Link>
-                      <Link
-                        href="/payment"
-                        className="bg-[#0fd0c8] px-3 py-2 rounded text-black hover:text-white mr-2">
-                        Buy Now
-                      </Link>
-                    </div>
-                  </div>
-                </a>
-              </div>
-            ))}
-          </section>
-          <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-y-10 gap-x-6 mt-10 mb-5">
-            {courses.map((course) => (
-              <div
-                key={course._id}
-                className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300">
+                className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300 hover:scale-105 hover:shadow-xl">
                 <a data-aos="fade-up" href="#">
                   <div className="relative h-40">
                     <Image
