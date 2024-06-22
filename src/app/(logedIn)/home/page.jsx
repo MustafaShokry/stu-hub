@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Card } from 'antd';
-import { Col, Row } from 'antd';
+import { Avatar, Card, Empty } from 'antd';
 const { Meta } = Card;
 import { Spin } from 'antd';
 import "./FeaturedCourses.css";
@@ -84,36 +83,44 @@ const EnrolledCourses = () => {
                     Enrolled Courses
                 </h1>
             </div>
-            <div  className="flex flex-wrap justify-center">
-            {courses.map((course) => (
-
-                <Card
-                    key={course._id}
-                    style={{
-                        width: 300,
-                        margin: 20,
-                    }}
-                    cover={
-                        <Image
-                            alt="example"
-                            src={course.imageCover}
-                            width={200}
-                            height={200}
-                        />
-                    }
-                    actions={[
-                        <SettingOutlined key="setting" />,
-                        <EditOutlined key="edit" />,
-                        <EllipsisOutlined key="ellipsis" />,
-                    ]}
-                >
-                    <Meta
-                        avatar={<Avatar src={course.image} />}
-                        title={course.title}
-                        description={course.instructor}
+            <div className="flex flex-wrap justify-center">
+                { courses.length === 0 ? (
+                    <div className="flex justify-center flex-wrap h-[100%]">
+                    <Empty
+                      className="mt-40"
+                      description="No courses available. Buy a course to get started"
                     />
-                </Card>
-            ))}
+                  </div>
+                ) :
+                courses.map((course) => (
+
+                    <Card
+                        key={course._id}
+                        style={{
+                            width: 300,
+                            margin: 20,
+                        }}
+                        cover={
+                            <Image
+                                alt="example"
+                                src={course.imageCover}
+                                width={200}
+                                height={200}
+                            />
+                        }
+                        actions={[
+                            <SettingOutlined key="setting" />,
+                            <EditOutlined key="edit" />,
+                            <EllipsisOutlined key="ellipsis" />,
+                        ]}
+                    >
+                        <Meta
+                            avatar={<Avatar src={course.image} />}
+                            title={course.title}
+                            description={course.instructor}
+                        />
+                    </Card>
+                ))}
             </div>
 
 

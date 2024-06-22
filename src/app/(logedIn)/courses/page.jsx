@@ -1,15 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Empty, Typography, Spin } from 'antd';
+import { Button, Empty, Typography, Spin, Card, Space, Avatar } from 'antd';
+import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
+const { Meta } = Card;
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import { text } from "@fortawesome/fontawesome-svg-core";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [eCourses, setECourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
@@ -19,19 +23,50 @@ const Courses = () => {
       duration: 1500,
     });
 
-    const fetchCourses = async () => {
+    const authToken = localStorage.getItem('token');
+    console.log(authToken);
+    const fetchCoursesIds = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/v1/course");
-        setCourses(response.data.data);
-        console.log(response.data.data);
+        //get the user courses ids
+        const response = await axios.get("http://localhost:8000/api/v1/user/profile", {
+          headers: {
+            'Authorization': 'Bearer ' + authToken
+          }
+        });
+        console.log(response);
+        return response.data.data.course;
       } catch (err) {
-        setError("Failed to fetch courses. Please try again later.");
+        console.log(err);
+        setError("Failed href fetch courses. Please try again later.");
+      }
+    };
+
+    const fetchCourses = async (coursesIds) => {
+      try {
+        // get all courses
+        const response = await axios.get("http://localhost:8000/api/v1/course");
+        console.log(response);
+        const allCourses = response.data.data;
+        setCourses(allCourses);
+        const enrolledCourses = allCourses.filter(course => coursesIds.includes(course._id));
+        // get the instructor name for each course
+        for (let i = 0; i < enrolledCourses.length; i++) {
+          const instructorResponse = await axios.get(`http://localhost:8000/api/v1/user/${enrolledCourses[i].instructor}`);
+          console.log(instructorResponse);
+          enrolledCourses[i].instructor = instructorResponse.data.data.username;
+          enrolledCourses[i].image = instructorResponse.data.data.image;
+        }
+        console.log(enrolledCourses);
+        setECourses(enrolledCourses);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setError("Failed href fetch courses. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchCourses();
+    fetchCoursesIds().then((r) => fetchCourses(r));
   }, []);
 
   const handleCheckout = async (courseId) => {
@@ -61,93 +96,68 @@ const Courses = () => {
 
   return (
     <>
-      {courses.length === 0 ? (
-        <div className="flex justify-center flex-wrap h-[100%]">
-          <Empty
-            className="mt-40"
-            description="No courses available. Please check back later."
-          />
-        </div>
-      ) : (
-        <>
-          {/* <Typography.Title level={2} className="text-center mt-10">
-            Courses
-          </Typography.Title> */}
-          <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-y-10 gap-x-6 mt-10 mb-5 w-fit mx-auto justify-items-center justify-center">
-            {courses.map((course) => (
-              <div
+      <div className="title">
+        <h1 className="text-3xl text-center mt-5">
+          Courses
+        </h1>
+      </div>
+      <div className="flex flex-wrap justify-center">
+        {courses.length === 0 ? (
+          <div className="flex justify-center flex-wrap h-[100%]">
+            <Empty
+              className="mt-40"
+              description="No courses available. Please check back later."
+            />
+          </div>
+        ) :
+          courses.map((course) => (
 
-                key={course._id}
-                className="bg-white shadow-md rounded-xl overflow-hidden transition duration-200 hover:scale-105  hover:shadow-lg hover:cursor-pointer">
-                <div data-aos="fade-up" href="#">
-                  <div className="relative h-40" onClick={() => router.push(`/courses/${course._id}`)}>
-                    <Image
-                      src={course.imageCover || "default_image_path.jpg"}
-                      alt={course.title}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-t-xl"
-                    />
-                  </div>
-                  <div className="p-4">
-                    <div onClick={() => router.push(`/courses/${course._id}`)}>
-                      <span className="text-gray-400 text-xs uppercase mb-2" >
-                        Brand
-                      </span>
-                      <p className="text-lg font-bold text-black truncate capitalize mb-2">
-                        {course.title}
-                      </p>
-                    </div>
-                    <div className="flex items-center mb-2" onClick={() => router.push(`/courses/${course._id}`)}>
-                      <p className="text-lg font-semibold text-black cursor-auto">
-                        ${course.price}
-                      </p>
-                      <del className="text-sm text-gray-600 ml-2">
-                        ${course.originalPrice}
-                      </del>
-                    </div>
-                    <div className="flex justify-end">
-                      <Link
-                        href="/cart"
-                        className="bg-[#0fd0c8] px-3 py-2 rounded text-black hover:text-white mr-2">
-                        Add to Cart
-                      </Link>
-                      <button
-                        onClick={() => handleCheckout(course._id)}
-                        className="bg-[#0fd0c8] px-3 py-2 rounded text-black hover:text-white mr-2">
-                        Buy Now
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </section>
-        </>
-      )}
+            <Card
+              hoverable
+              key={course._id}
+              style={{
+                width: 240,
+                margin: 20,
+              }}
+              cover={
+                <Image
+                  alt="example"
+                  src={course.imageCover}
+                  width={200}
+                  height={200}
+                />
+              }
+              actions={[
+                eCourses.includes(course) ? <Button type="primary" disabled>Enrolled</Button> : <Button type="primary" onClick={() => handleCheckout(course._id)}>Enroll</Button>,
+              ]}
+              body={<Link href={`/course/${course._id}`}><a>View Course</a></Link>}
+            >
+              <Meta
+                title={course.title}
+                style={{
+                  textOverflow: 'ellipsis',
+                  overflow: 'hidden',
+                  whiteSpace: 'wrap',
+                  width: '100%',
+                  display: 'block',
+                  textAlign: 'center'
+                }}
+                description={
+                  <Space size="small" direction="vertical">
+                    <p>{course.description}</p>
+                    <p style={{
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}>{course.price} EGP</p>
+                  </Space>
+                }
+              />
+            </Card>
+          ))}
+      </div>
+
     </>
   );
 };
 
 export default Courses;
-{/* <section className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-y-10 gap-x-6 mt-10 mb-5">
-  {courses.map((course) => (
-    <div
-      key={course._id}
-      className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300">
-      <a data-aos="fade-up" href="#">
-        <div className="relative h-40">
-          <Image
-            src={course.imageCover || "default_image_path.jpg"}
-            alt={course.title}
-            layout="fill"
-            objectFit="cover"
-            className="rounded-t-xl"
-          />
-        </div>
-
-      </a>
-    </div>
-  ))}
-</section> */}
-
