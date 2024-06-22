@@ -17,17 +17,17 @@ const { Header, Content, Sider, Footer } = Layout
 
 export default function RootLayout({ children }) {
     return (
-        <Layout className='main-container'>
-            <Header style={{padding: '0 10px'}}>
+        <Layout className='main-container' >
+            <Header style={{ padding: '0 10px' }}>
                 <AppHeader />
             </Header>
-            <Layout>
-                <AppSider />
-                <Content>
+            <Layout style={{ height: '100%', overflow: 'auto' }}>
+                <AppSider style={{ height: '100%', overflow: 'auto' }} />
+                <Content style={{ height: '100%', overflow: 'auto' }}>
                     {children}
                 </Content>
             </Layout>
-            
+
         </Layout>
     )
 }
