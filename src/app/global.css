@@ -18,11 +18,15 @@ body {
 }
 
 .ant-layout {
-    height: 100%;
+    height: 100vh;
 }
 
 .ant-menu {
-    height: 100%;
+    height: 100vh;
+}
+
+.ant-sider {
+    height: 100vh;
 }
 
 section {

@@ -5,20 +5,20 @@ import Link from 'next/link'
 
 function LHeader() {
   return (
-    <header class="w-[100%] absolute right-0 top-0">
-        <nav class="bg-gray-800 shadow-lg border-gray-200">
-          <div class="flex flex-wrap items-center justify-between px-8 mx-auto">
-            <Link href="/" class="flex items-center">
-              <Image src={logo} class=" h-11 w-11 mr-3" alt="Landwind Logo" />
-              <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+    <header className="w-[100%] absolute right-0 top-0">
+        <nav className="bg-gray-800 shadow-lg border-gray-200">
+          <div className="flex flex-wrap items-center justify-between px-8 mx-auto">
+            <Link href="/" className="flex items-center">
+              <Image src={logo} className=" h-11 w-11 mr-3" alt="Landwind Logo" />
+              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
                 STU-HUB
               </span>
             </Link>
-            <div class="flex items-center lg:order-2">
-              <div class="hidden mt-2 mr-4 sm:inline-block">
+            <div className="flex items-center lg:order-2">
+              <div className="hidden mt-2 mr-4 sm:inline-block">
                 <Link
                   href="/login"
-                  class="github-button text-gray-50"
+                  className="github-button text-gray-50"
                   data-size="large"
                   data-icon="octicon-star"
                   data-show-count="true"
@@ -29,18 +29,18 @@ function LHeader() {
 
               <Link
                 href="/signUp"
-                class="text-white bg-[#11ab9e] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0  focus:outline-none">
+                className="text-white bg-[#11ab9e] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 sm:mr-2 lg:mr-0  focus:outline-none">
                 Sign Up
               </Link>
               <button
                 data-collapse-toggle="mobile-menu-2"
                 type="button"
-                class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                 aria-controls="mobile-menu-2"
                 aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
+                <span className="sr-only">Open main menu</span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@ function LHeader() {
                     clip-rule="evenodd"></path>
                 </svg>
                 <svg
-                  class="hidden w-6 h-6"
+                  className="hidden w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg">
@@ -62,13 +62,13 @@ function LHeader() {
               </button>
             </div>
             <div
-              class="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
+              className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-1"
               id="mobile-menu-2">
-              <ul class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
+              <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
                 <li>
                   <Link
                     href="/"
-                    class="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
+                    className="block py-2 pl-3 pr-4 text-white bg-purple-700 rounded lg:bg-transparent lg:text-purple-700 lg:p-0 dark:text-white"
                     aria-current="page">
                     Home
                   </Link>
@@ -76,14 +76,14 @@ function LHeader() {
                 <li>
                   <Link
                     href="/aboutus"
-                    class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                    className="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                     About Us
                   </Link>
                 </li>
                 <li>
                   <Link
                     href="/contactus"
-                    class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
+                    className="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-purple-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">
                     Contact Us
                   </Link>
                 </li>

@@ -162,7 +162,7 @@ const SignUp = () => {
     }
     // Perform your form submission logic here
     console.log("Form data submitted:", formData);
-    formData.role = "user";
+    formData.role = "instructor";
 
     try {
       const response = await axios.post("http://localhost:8000/api/v1/auth/signup", formData);
@@ -174,6 +174,7 @@ const SignUp = () => {
 
       console.log("SignUp successful:", response.data);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.data));
       router.push("/featured");
     } catch (error) {
       console.error("There was a problem with the signup request:", error);

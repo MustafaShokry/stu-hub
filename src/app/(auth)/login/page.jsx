@@ -81,6 +81,7 @@ const Login = () => {
 
       console.log("Login successful:", response.data);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.data));
       router.push("/featured");
     } catch (error) {
       console.error("There was a problem with the Login request:", error);
