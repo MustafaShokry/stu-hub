@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Layout, Menu, Avatar, Dropdown, Button } from 'antd';
 import { UserOutlined, DownOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons';
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import logo from '../../public/logo.png';
 const { Header } = Layout;
@@ -26,9 +27,12 @@ const UserMenu = () => (
 
 const MyHeader = () => {
   const [username, setUsernamea] = useState('');
+  const [role, setRole] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     setUsernamea(localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).username : '');
+    setRole(localStorage.getItem('user') ? (JSON.parse(localStorage.getItem('user')).role) : '');
   }, []);
 
   return (
@@ -73,8 +77,14 @@ const MyHeader = () => {
       </div> */}
 
       <div style={{ marginRight: '20px', display: 'flex', alignItems: 'center' }} className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-2">
-        <Button type="primary" style={{ marginRight: '10px', backgroundColor: '#0cd09f' }} >
-          Action
+        <Button type="primary" style={{ marginRight: '10px' }}
+          onClick={() => {
+            role === 'instructor' ? router.push('/addcourse') : router.push('/home')
+          }}
+        >
+          {
+            role === 'instructor' ? 'Create Course' : 'Become an Instructor'
+          }
         </Button>
         <Dropdown overlay={UserMenu} trigger={['click']}>
           <a className="ant-dropdown-link" onClick={e => e.preventDefault()} style={{ display: 'flex', alignItems: 'center', color: '#fff' }}>

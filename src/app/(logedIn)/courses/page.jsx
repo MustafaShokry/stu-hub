@@ -47,17 +47,18 @@ const Courses = () => {
         const response = await axios.get("http://localhost:8000/api/v1/course");
         console.log(response);
         const allCourses = response.data.data;
-        setCourses(allCourses);
+        
         const enrolledCourses = allCourses.filter(course => coursesIds.includes(course._id));
         // get the instructor name for each course
-        for (let i = 0; i < enrolledCourses.length; i++) {
-          const instructorResponse = await axios.get(`http://localhost:8000/api/v1/user/${enrolledCourses[i].instructor}`);
+        for (let i = 0; i < allCourses.length; i++) {
+          const instructorResponse = await axios.get(`http://localhost:8000/api/v1/user/${allCourses[i].instructor}`);
           console.log(instructorResponse);
-          enrolledCourses[i].instructor = instructorResponse.data.data.username;
-          enrolledCourses[i].image = instructorResponse.data.data.image;
+          allCourses[i].instructor = instructorResponse.data.data.username;
+          allCourses[i].image = instructorResponse.data.data.image;
         }
         console.log(enrolledCourses);
         setECourses(enrolledCourses);
+        setCourses(allCourses);
         setLoading(false);
       } catch (err) {
         console.log(err);
@@ -128,23 +129,16 @@ const Courses = () => {
                 />
               }
               actions={[
-                eCourses.includes(course) ? <Button type="primary" disabled>Enrolled</Button> : <Button type="primary" onClick={() => handleCheckout(course._id)}>Enroll</Button>,
+                eCourses.includes(course) ? <Button type="primary" disabled>Enrolled</Button> : <Button type="primary" onClick={() => handleCheckout(course._id)}>Buy</Button>,
               ]}
               body={<Link href={`/course/${course._id}`}><a>View Course</a></Link>}
             >
               <Meta
+                avatar={<Avatar src={course.image} />}
                 title={course.title}
-                style={{
-                  textOverflow: 'ellipsis',
-                  overflow: 'hidden',
-                  whiteSpace: 'wrap',
-                  width: '100%',
-                  display: 'block',
-                  textAlign: 'center'
-                }}
                 description={
                   <Space size="small" direction="vertical">
-                    <p>{course.description}</p>
+                    <p>{course.instructor}</p>
                     <p style={{
                       color: 'black',
                       fontWeight: 'bold'

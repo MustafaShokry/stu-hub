@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Card, Empty } from 'antd';
+import { Avatar, Card, Empty, Space } from 'antd';
 const { Meta } = Card;
 import { Spin } from 'antd';
 import "./FeaturedCourses.css";
@@ -97,7 +97,7 @@ const EnrolledCourses = () => {
                     <Card
                         key={course._id}
                         style={{
-                            width: 300,
+                            width: 260,
                             margin: 20,
                         }}
                         cover={
@@ -117,7 +117,15 @@ const EnrolledCourses = () => {
                         <Meta
                             avatar={<Avatar src={course.image} />}
                             title={course.title}
-                            description={course.instructor}
+                            description={
+                                <Space size="small" direction="vertical">
+                                  <p>{course.description}</p>
+                                  <p style={{
+                                    color: 'black',
+                                    fontWeight: 'bold'
+                                  }}>{course.price} EGP</p>
+                                </Space>
+                              }
                         />
                     </Card>
                 ))}
