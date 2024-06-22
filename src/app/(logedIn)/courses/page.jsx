@@ -17,9 +17,9 @@ const Courses = () => {
       duration: 1500,
     });
 
-    const fetchCourses = async () => {
+    const fetchuser = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/v1/course");
+        const response = await axios.get("http://localhost:8000/api/v1/user");
         setCourses(response.data.data);
         console.log(response.data.data);
       } catch (err) {
@@ -29,7 +29,7 @@ const Courses = () => {
       }
     };
 
-    fetchCourses();
+    fetchuser();
   }, []);
 
   if (loading) {
