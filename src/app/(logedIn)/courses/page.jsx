@@ -21,7 +21,8 @@ const Courses = () => {
   useEffect(() => {
     Aos.init({
       duration: 1500,
-    });
+    }
+  );
 
     const authToken = localStorage.getItem('token');
     console.log(authToken);

@@ -16,22 +16,11 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import Aos from "aos";
-import "aos/dist/aos.css";
-import profile from "Assets/imgs/1.png"
+import "/node_modules/aos/dist/aos.css";
 
-const fetchCourses = async () => {
-  try {
-    const response = await axios.get("http://localhost:8000/api/v1/user");
-    setCourses(response.data.data);
-    console.log(response.data.data);
-  } catch (err) {
-    setError("Failed to fetch courses. Please try again later.");
-  } finally {
-    setLoading(false);
-  }
-};
 
-fetchCourses();
+
+
 
 
 function Profile() {
@@ -41,7 +30,7 @@ function Profile() {
           <Col md="4">
             <Card className="card-user">
               <div className="image">
-                <img alt="..." src={profile} />
+                <img alt="..."  />
               </div>
               <CardBody>
                 <div className="author">
@@ -49,7 +38,7 @@ function Profile() {
                     <img
                       alt="..."
                       className="avatar border-gray"
-                      src={profile}
+                      
                     />
                     <h5 className="title">Chet Faker</h5>
                   </a>
@@ -99,7 +88,7 @@ function Profile() {
                           <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={profile}
+                            
                           />
                         </div>
                       </Col>
@@ -128,7 +117,7 @@ function Profile() {
                           <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={profile}
+                            
                           />
                         </div>
                       </Col>
@@ -157,7 +146,7 @@ function Profile() {
                           <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
-                            src={profile}
+                            
                           />
                         </div>
                       </Col>
