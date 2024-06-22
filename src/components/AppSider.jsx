@@ -70,7 +70,7 @@ const items = [
         key: 'Home',
         label: 'Home',
         icon: <HomeOutlined />,
-        to: '/',
+        to: '/home',
     },
     {
         key: 'Search',

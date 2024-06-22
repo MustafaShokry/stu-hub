@@ -124,7 +124,7 @@ const AddCourse = () => {
                 name="videos"
                 rules={[{ required: true, message: 'Please enter the videos' }]}
             >
-                 <Upload {...propsV}>
+                <Upload {...propsV}>
                     <Button icon={<UploadOutlined />}>Click to upload</Button>
                 </Upload>
             </Form.Item>
