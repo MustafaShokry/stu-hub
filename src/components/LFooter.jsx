@@ -1,5 +1,6 @@
 import React from 'react'
 import { TwitterOutlined, FacebookOutlined, DribbbleOutlined, GithubOutlined } from '@ant-design/icons';
+import './LFooter.css'
 
 function LFooter() {
   return (
