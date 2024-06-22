@@ -3,15 +3,15 @@ import React, { useEffect, useState } from "react";
 import "./FeaturedCourses.css";
 import Image from "next/image";
 import axios from "axios";
+import Link from "next/link";
 
-//Images
-import c1 from "../Courses/imgs/1.jpg"
-import c2 from "../Courses/imgs/2.jpg"
+// //Images
+import c1 from "../../imgs/2.jpg"
+import c2 from "../../imgs/2.jpg"
 
 // React Icons
 import { IoMdTime } from "react-icons/io";
 import { FaStar } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import { MdOutlineDesignServices } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
 import { FaChartLine } from "react-icons/fa6";
@@ -26,25 +26,51 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 
 const FeaturedCourses = () => {
+    const [coursesIds, setCoursesIds] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         Aos.init({
             duration: 1500,
         });
-        const fetchCourses = async () => {
+
+        const authToken = localStorage.getItem('token');
+        const fetchCoursesIds = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/api/v1/course");
-                setCourses(response.data.data);
+                //get the user courses ids
+                const response = await axios.get("http://localhost:8000/api/v1/user/profile", {}, {
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken
+                    }
+                });
+                setCoursesIds(response.data.course);
                 console.log(response.data.data);
             } catch (err) {
-                setError("Failed to fetch courses. Please try again later.");
+                console.log(err);
+                setError("Failed href fetch courses. Please try again later.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchCourses();
-    }, []);
+        const fetchCourses = async () => {
+            try {
+                for (let i = 0; i < coursesIds.length; i++) {
+                    const response = await axios.get(`http://localhost:8000/api/v1/course/${courses[i]}`);
+                    setCourses((prev) => [...prev, response.data.data]);
+                    console.log(response.data.data);
+                }
+            } catch (err) {
+                setError("Failed href fetch courses. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+
+        fetchCoursesIds().then(() => fetchCourses());
+    }, [coursesIds, courses]);
 
     return (
         <>
@@ -55,13 +81,13 @@ const FeaturedCourses = () => {
                 </h1>
             </div>
 
-            <section
+            {/* <section
                 data-aos="fade-up"
                 className="cards flex justify-evenly flex-wrap wrapper relative left-[5%] top-[65px]">
                 <a
                     href="#"
                     className="relative w-[350px] h-[250px] block bg-gray-200 shadow-3xl overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8">
-                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-href-r from-green-300 via-blue-500 href-purple-600"></span>
 
                     <div className="sm:flex sm:justify-between sm:gap-4 relative top-[-12px]">
                         <div>
@@ -110,7 +136,7 @@ const FeaturedCourses = () => {
                             <div className="flex ml-[50px] flex-col-reverse">
                                 <Link
                                     className="bg-teal-500 p-2 hover:bg-teal-400 rounded text-lg font-medium"
-                                    to="/overview">
+                                    href="/overview">
                                     Enroll
                                 </Link>
                             </div>
@@ -121,7 +147,7 @@ const FeaturedCourses = () => {
                 <a
                     href="#"
                     className="relative w-[350px] h-[250px] block bg-gray-200 shadow-3xl overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8">
-                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-href-r from-green-300 via-blue-500 href-purple-600"></span>
 
                     <div className="sm:flex sm:justify-between sm:gap-4 relative top-[-12px]">
                         <div>
@@ -169,7 +195,7 @@ const FeaturedCourses = () => {
                         <div className="flex ml-[50px] flex-col-reverse">
                             <Link
                                 className="bg-teal-500 p-2 hover:bg-teal-400 rounded text-lg font-medium"
-                                to="/overview">
+                                href="/overview">
                                 Enroll
                             </Link>
                         </div>
@@ -179,7 +205,7 @@ const FeaturedCourses = () => {
                 <a
                     href="#"
                     className="relative w-[350px] h-[250px] block bg-gray-200 shadow-3xl overflow-hidden rounded-lg border border-gray-100 p-4 sm:p-6 lg:p-8">
-                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600"></span>
+                    <span className="absolute inset-x-0 bottom-0 h-2 bg-gradient-href-r from-green-300 via-blue-500 href-purple-600"></span>
 
                     <div className="sm:flex sm:justify-between sm:gap-4 relative top-[-12px]">
                         <div>
@@ -228,7 +254,7 @@ const FeaturedCourses = () => {
                             <div className="flex ml-[50px] flex-col-reverse">
                                 <Link
                                     className="bg-teal-500 p-2 hover:bg-teal-400 rounded text-lg font-medium"
-                                    to="/overview">
+                                    href="/overview">
                                     Enroll
                                 </Link>
                             </div>
@@ -301,7 +327,7 @@ const FeaturedCourses = () => {
                             <p className="font-medium">87% Complete</p>
                         </div>
                         <div className="icon mt-[10px]">
-                            <Link to="/saved">
+                            <Link href="/saved">
                                 <FaStar className="text-4xl mr-[50px] bg-teal-500 rounded-full p-2" />
                             </Link>
                         </div>
@@ -321,7 +347,7 @@ const FeaturedCourses = () => {
                             <p className="font-medium">85% Complete</p>
                         </div>
                         <div className="icon mt-[10px]">
-                            <Link to="/saved">
+                            <Link href="/saved">
                                 <FaStar className="text-4xl mr-[50px] bg-teal-500 rounded-full p-2" />
                             </Link>
                         </div>
@@ -331,11 +357,11 @@ const FeaturedCourses = () => {
 
             <div className="moreC relative left-[45%] top-[300px]">
                 <Link
-                    to="/courses"
+                    href="/courses"
                     className="bg-teal-400 p-2 text-xl font-medium mb-[100px] rounded-3xl">
                     View all Courses
                 </Link>
-            </div>
+            </div> */}
         </>
     );
 };

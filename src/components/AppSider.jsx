@@ -52,7 +52,7 @@
 'use client';
 
 import React, {useState} from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import { Layout, Menu } from 'antd';
 import {
     SearchOutlined,
@@ -67,37 +67,37 @@ const { Sider } = Layout;
 
 const items = [
     {
-        key: 'Home',
+        key: '/home',
         label: 'Home',
         icon: <HomeOutlined />,
         to: '/home',
     },
     {
-        key: 'Search',
+        key: '/search',
         label: 'Search',
         icon: <SearchOutlined />,
         to: '/search',
     },
     {
-        key: 'Courses',
+        key: '/courses',
         label: 'Courses',
         icon: <PlayCircleOutlined />,
         to: '/courses',
     },
     {
-        key: 'Saved',
+        key: '/saved',
         label: 'Saved',
         icon: <BookOutlined />,
         to: '/saved',
     },
     {
-        key: 'Internships',
+        key: '/internships',
         label: 'Internships',
         icon: <SolutionOutlined />,
         to: '/internships',
     },
     {
-        key: 'Profile',
+        key: '/profile',
         label: 'Profile',
         icon: <UserOutlined />,
         to: '/profile',
@@ -105,19 +105,22 @@ const items = [
 ];
 
 function AppSider() {
-    const [active, setActive] = useState('Home');
+    const pathname = usePathname();
+    console.log(pathname);
+    const [active, setActive] = useState(pathname);
     const router = useRouter();
     const onClick = (e) => {
         setActive(e.key);
         router.push(e.item.props.to);
     };
+    
 
     return (
         <Sider>
             <Menu
                 onClick={onClick}
                 defaultSelectedKeys={['1']}
-                defaultOpenKeys={['Home']}
+                selectedKeys={[active]}
                 mode="inline"
                 items={items}
                 style={{ height: '100%', borderRight: 0 }}
