@@ -51,12 +51,6 @@ const Login = () => {
 
   return (
     <div className="login">
-      {/* <div className="backWhite">
-        <div className="logo">
-          <i className="fa-solid fa-book-open"></i>
-          <h1>STU-HUB</h1>
-        </div>
-      </div> */}
       <div className="title">
         <h1 className="text-4xl">Login</h1>
         <p className="" style={{ fontSize: "16px" }}>
