@@ -212,7 +212,7 @@ const Home = () => {
                   </div>
                   <div className="flex-grow">
                     <p className="leading-relaxed text-base">
-                    Subject text: "We offer you an accessible and effective learning experience, focused on delivering high-quality content without unnecessary complexity or clutter. Join us for a streamlined learning experience that suits your needs."
+                    Subject text: We offer you an accessible and effective learning experience, focused on delivering high-quality content without unnecessary complexity or clutter. Join us for a streamlined learning experience that suits your needs.
                     Learn from the experts
                     </p>
                    
@@ -241,7 +241,7 @@ const Home = () => {
                   </div>
                   <div className="flex-grow">
                     <p className="leading-relaxed text-base">
-                    "Whether you are a beginner or an experienced professional, we offer you courses to suit all levels. Our trainers are experts in their field, passionate about sharing their knowledge and helping you succeed."
+                    Whether you are a beginner or an experienced professional, we offer you courses to suit all levels. Our trainers are experts in their field, passionate about sharing their knowledge and helping you succeed.
                     Education for all
                     </p>
                     
@@ -271,7 +271,7 @@ const Home = () => {
                   </div>
                   <div className="flex-grow">
                     <p className="leading-relaxed text-base">
-                    "We designed our courses to deliver a personalized learning experience that meets your individual needs. We focus on providing high educational content 
+                    We designed our courses to deliver a personalized learning experience that meets your individual needs. We focus on providing high educational content 
                     </p>
                     
                   </div>
