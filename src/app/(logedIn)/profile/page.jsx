@@ -114,6 +114,7 @@ function Profile() {
                     <Row>
                       <Col md="2" xs="2">
                         <div className="avatar">
+                          
                           <img
                             alt="..."
                             className="img-circle img-no-padding img-responsive"
