@@ -2,6 +2,7 @@
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 import { Layout, FloatButton } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
+
 import './global.css'
 import AppSider from '@/components/AppSider';
 import AppHeader from '@/components/AppHeader';

@@ -1,126 +1,8 @@
 'use client';
-// import { Form, Input, Button, Checkbox, Select } from 'antd';
-
-// const { Option } = Select;
-
-// const SignUpForm = () => {
-//   const onFinish = (values) => {
-//     console.log('Received values of form: ', values);
-//   };
-
-//   return (
-//     <Form
-//       name="signup"
-//       onFinish={onFinish}
-//       scrollToFirstError
-//       style={{ maxWidth: '400px', margin: 'auto', padding: '20px', background: '#fff', borderRadius: '8px' }}
-//     >
-//       <h2>Sign Up</h2>
-//       <Form.Item
-//         name="username"
-//         label="Username"
-//         rules={[
-//           {
-//             required: true,
-//             message: 'Please input your Username!',
-//           },
-//         ]}
-//       >
-//         <Input />
-//       </Form.Item>
-
-//       <Form.Item
-//         name="email"
-//         label="Email"
-//         rules={[
-//           {
-//             type: 'email',
-//             message: 'The input is not valid E-mail!',
-//           },
-//           {
-//             required: true,
-//             message: 'Please input your E-mail!',
-//           },
-//         ]}
-//       >
-//         <Input />
-//       </Form.Item>
-
-//       <Form.Item
-//         name="password"
-//         label="Password"
-//         rules={[
-//           {
-//             required: true,
-//             message: 'Please input your password!',
-//           },
-//         ]}
-//         hasFeedback
-//       >
-//         <Input.Password />
-//       </Form.Item>
-
-//       <Form.Item
-//         name="confirm"
-//         label="Confirm Password"
-//         dependencies={['password']}
-//         hasFeedback
-//         rules={[
-//           {
-//             required: true,
-//             message: 'Please confirm your password!',
-//           },
-//           ({ getFieldValue }) => ({
-//             validator(_, value) {
-//               if (!value || getFieldValue('password') === value) {
-//                 return Promise.resolve();
-//               }
-//               return Promise.reject(new Error('The two passwords that you entered do not match!'));
-//             },
-//           }),
-//         ]}
-//       >
-//         <Input.Password />
-//       </Form.Item>
-
-//       <Form.Item
-//         name="role"
-//         label="Role"
-//         rules={[{ required: true, message: 'Please select your role!' }]}
-//       >
-//         <Select placeholder="Select your role">
-//           <Option value="user">User</Option>
-//           <Option value="instructor">Instructor</Option>
-//         </Select>
-//       </Form.Item>
-
-//       <Form.Item
-//         name="agreement"
-//         valuePropName="checked"
-//         rules={[
-//           {
-//             validator: (_, value) =>
-//               value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-//           },
-//         ]}
-//       >
-//         <Checkbox>
-//           I have read the <a href="">agreement</a>
-//         </Checkbox>
-//       </Form.Item>
-
-//       <Form.Item>
-//         <Button type="primary" htmlType="submit" style={{ width: '100%' }}>
-//           Sign Up
-//         </Button>
-//       </Form.Item>
-//     </Form>
-//   );
-// };
-
-// export default SignUpForm;
 
 import React, { useState } from "react";
+import { Form, Upload, Button, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import "./SignUp.css";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -137,6 +19,21 @@ const SignUp = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
+  const [fileList, setFileList] = useState([]);
+
+  const props = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
 
   // const navigate = useNavigate();
 
@@ -153,19 +50,28 @@ const SignUp = () => {
     e.preventDefault();
     // Perform validation here if needed
     if (formData.password !== formData.conPassword) {
-      alert("Passwords do not match!");
+      message.error("Passwords do not match!");
       return;
     }
     if (!formData.agree) {
-      alert("You must agree to the terms and privacy policy!");
+      message.error("You must agree to the terms and conditions!");
       return;
     }
-    // Perform your form submission logic here
-    console.log("Form data submitted:", formData);
-    formData.role = "instructor";
+    if (fileList.length === 0) {
+      message.error("Please upload an image!");
+      return;
+    }
+    formData.role = "user";
+    const vformData = new FormData();
+    vformData.append("fullName", formData.fullName);
+    vformData.append("email", formData.email);
+    vformData.append("username", formData.username);
+    vformData.append("password", formData.password);
+    vformData.append("role", formData.role);
+    vformData.append("image", fileList[0]);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", formData);
+      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", vformData);
 
       if (response.data.errors) {
         setError(response.data.errors[0].msg);
@@ -175,25 +81,19 @@ const SignUp = () => {
       console.log("SignUp successful:", response.data);
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.data));
-      router.push("/featured");
+      router.push("/courses");
     } catch (error) {
-      console.error("There was a problem with the signup request:", error);
+      console.error("An error occurred:", error); 
       if (error.response && error.response.data && error.response.data.errors) {
-        setError(error.response.data.errors[0].msg);
+        message.error(error.response.data.errors[0].msg);
       } else {
-        setError("An unexpected error occurred.");
+        message.error("An unexpected error occurred.");
       }
     }
   };
 
   return (
     <div className="signup">
-      {/* <div className="backWhite">
-        <div className="logo">
-          <i className="fa-solid fa-book-open"></i>
-          <h1>STU-HUB</h1>
-        </div>
-      </div> */}
       <div className="title">
         <h1>Sign Up</h1>
         <p>Join STU-HUB and start learning</p>
@@ -253,7 +153,20 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <i className="fa-solid fa-check"></i>
+        <Form.Item
+          label="Image"
+          name="image"
+          style={{
+            width: "100%",
+            textAlign: "left",
+            marginTop: "15px",
+          }}
+          rules={[{ required: true, message: 'Please upload the image cover' }]}
+        >
+          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
         <input
           type="checkbox"
           name="agree"
@@ -261,11 +174,13 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <label id="checkbox" style = {{marginTop:'0px', display:'inline'}}>
+        <label id="checkbox" style={{ marginTop: '0px', display: 'inline' }}>
           I agree with the Terms and Privacy Policy.
         </label>
-        
-        <div className="btn">
+
+
+
+        <div className="mylgbtn">
           <button type="submit">Sign Up</button>
         </div>
         <p id="theEnd">

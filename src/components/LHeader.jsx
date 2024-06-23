@@ -1,7 +1,7 @@
 import React from 'react'
 import "./Lheader.css"
 import Image from 'next/image'
-import logo from '../../Assets/imgs/logo.png'
+import logo from '../../Assets/imgs/file.jpg'
 import Link from 'next/link'
 
 function LHeader() {
