@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
-import { Form, Upload, Button } from "antd";
+import { Form, Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "./SignUp.css";
 import Link from "next/link";
@@ -50,11 +50,15 @@ const SignUp = () => {
     e.preventDefault();
     // Perform validation here if needed
     if (formData.password !== formData.conPassword) {
-      alert("Passwords do not match!");
+      message.error("Passwords do not match!");
       return;
     }
     if (!formData.agree) {
-      alert("You must agree to the terms and privacy policy!");
+      message.error("You must agree to the terms and conditions!");
+      return;
+    }
+    if (fileList.length === 0) {
+      message.error("Please upload an image!");
       return;
     }
     formData.role = "user";
@@ -79,11 +83,11 @@ const SignUp = () => {
       localStorage.setItem("user", JSON.stringify(response.data.data));
       router.push("/courses");
     } catch (error) {
-      console.error("There was a problem with the signup request:", error);
+      console.error("An error occurred:", error); 
       if (error.response && error.response.data && error.response.data.errors) {
-        setError(error.response.data.errors[0].msg);
+        message.error(error.response.data.errors[0].msg);
       } else {
-        setError("An unexpected error occurred.");
+        message.error("An unexpected error occurred.");
       }
     }
   };
