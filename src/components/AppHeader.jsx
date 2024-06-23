@@ -5,7 +5,7 @@ import { UserOutlined, DownOutlined, SettingOutlined, LogoutOutlined } from '@an
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import logo from '../../public/logo.png';
+import logo from '../../public/file.jpg';
 const { Header } = Layout;
 
 
