@@ -1,0 +1,45 @@
+.courseCard {
+    max-width: 800px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.courseTitle {
+    margin: 0;
+}
+
+.courseDescription {
+    margin: 0;
+}
+
+.instructorName {
+    margin: 0;
+    color: rgba(0, 0, 0, 0.45);
+}
+
+.videosTitle {
+    margin-top: 20px;
+}
+
+.videoItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.videoTitle {
+    margin-top: 8px;
+    text-align: center;
+    font-weight: bold;
+}
