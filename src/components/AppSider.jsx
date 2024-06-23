@@ -68,15 +68,17 @@ const { Sider } = Layout;
 const items = [
     {
         key: '/home',
-        label: 'Home',
+        label: 'Dashboard',
         icon: <HomeOutlined />,
         to: '/home',
+        disabled: true,
     },
     {
         key: '/search',
         label: 'Search',
         icon: <SearchOutlined />,
         to: '/search',
+        disabled: true,
     },
     {
         key: '/courses',
@@ -89,12 +91,14 @@ const items = [
         label: 'Saved',
         icon: <BookOutlined />,
         to: '/saved',
+        disabled: true,
     },
     {
         key: '/internships',
         label: 'Internships',
         icon: <SolutionOutlined />,
         to: '/internships',
+        disabled: true,
     },
     {
         key: '/profile',
