@@ -60,8 +60,12 @@ const AddCourse = () => {
                 router.push('/courses');
             })
             .catch((error) => {
-                console.error(error);
-                message.error('Failed to add course, you are not authorized to perform this action');
+                console.error("An error occurred:", error);
+                if (error.response && error.response.data && error.response.data.errors) {
+                    message.error(error.response.data.errors[0].msg);
+                } else {
+                    message.error("An unexpected error occurred.");
+                }
                 setUploading(false);
             });
     };
