@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState } from "react";
+import { Form, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import "./SignUp.css";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -17,6 +19,21 @@ const SignUp = () => {
   });
   const [error, setError] = useState("");
   const router = useRouter();
+  const [fileList, setFileList] = useState([]);
+
+  const props = {
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      setFileList([...fileList, file]);
+      return false;
+    },
+    fileList,
+  };
 
   // const navigate = useNavigate();
 
@@ -40,12 +57,17 @@ const SignUp = () => {
       alert("You must agree to the terms and privacy policy!");
       return;
     }
-    // Perform your form submission logic here
-    console.log("Form data submitted:", formData);
-    formData.role = "instructor";
+    formData.role = "user";
+    const vformData = new FormData();
+    vformData.append("fullName", formData.fullName);
+    vformData.append("email", formData.email);
+    vformData.append("username", formData.username);
+    vformData.append("password", formData.password);
+    vformData.append("role", formData.role);
+    vformData.append("image", fileList[0]);
 
     try {
-      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", formData);
+      const response = await axios.post("http://localhost:8000/api/v1/auth/signup", vformData);
 
       if (response.data.errors) {
         setError(response.data.errors[0].msg);
@@ -127,7 +149,20 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <i className="fa-solid fa-check"></i>
+        <Form.Item
+          label="Image"
+          name="image"
+          style={{
+            width: "100%",
+            textAlign: "left",
+            marginTop: "15px",
+          }}
+          rules={[{ required: true, message: 'Please upload the image cover' }]}
+        >
+          <Upload {...props}>
+            <Button icon={<UploadOutlined />}>Click to upload</Button>
+          </Upload>
+        </Form.Item>
         <input
           type="checkbox"
           name="agree"
@@ -135,10 +170,12 @@ const SignUp = () => {
           onChange={handleChange}
           required
         />
-        <label id="checkbox" style = {{marginTop:'0px', display:'inline'}}>
+        <label id="checkbox" style={{ marginTop: '0px', display: 'inline' }}>
           I agree with the Terms and Privacy Policy.
         </label>
-        
+
+
+
         <div className="mylgbtn">
           <button type="submit">Sign Up</button>
         </div>
