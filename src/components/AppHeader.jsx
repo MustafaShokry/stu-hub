@@ -91,7 +91,7 @@ const MyHeader = () => {
       <div style={{ marginRight: '20px', display: 'flex', alignItems: 'center' }} className="items-center justify-between hidden w-full lg:flex lg:w-auto lg:order-2">
         <Button type="primary" style={{ marginRight: '10px' }}
           onClick={() => {
-            role === 'instructor' ? router.push('/addcourse') : router.push('/home')
+            role === 'instructor' ? router.push('/addcourse') : router.push('/courses')
           }}
         >
           {
