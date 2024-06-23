@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from "react";
+import { message } from "antd";
 import "./Login.css";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
@@ -42,9 +43,9 @@ const Login = () => {
     } catch (error) {
       console.error("There was a problem with the Login request:", error);
       if (error.response && error.response.data ) {
-        setError(error.response.data.message);
+        message.error(error.response.data.errors[0].msg);
       } else {
-        setError("An unexpected error occurred.");
+        message.error("An unexpected error occurred.");
       }
     }
   };
