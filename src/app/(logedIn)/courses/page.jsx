@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button, Empty, Typography, Spin, Card, Space, Avatar } from 'antd';
+import { Button, Empty, Typography, Spin, Card, Space, Avatar, message } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 const { Meta } = Card;
 import Image from "next/image";
@@ -22,7 +22,7 @@ const Courses = () => {
     Aos.init({
       duration: 1500,
     }
-  );
+    );
 
     const authToken = localStorage.getItem('token');
     console.log(authToken);
@@ -48,7 +48,7 @@ const Courses = () => {
         const response = await axios.get("http://localhost:8000/api/v1/course");
         console.log(response);
         const allCourses = response.data.data;
-        
+
         const enrolledCourses = allCourses.filter(course => coursesIds.includes(course._id));
         // get the instructor name for each course
         for (let i = 0; i < allCourses.length; i++) {
@@ -73,15 +73,21 @@ const Courses = () => {
 
   const handleCheckout = async (courseId) => {
     const authToken = localStorage.getItem('token');
-    const response = await axios.post(`http://localhost:8000/api/v1/order/checkoutSession/${courseId}`, {}, {
-      headers: {
-        'Authorization': 'Bearer ' + authToken
-      }
-    });
-    console.log(response);
 
-    // open stripe checkout
-    window.location.href = response.data.data.url;
+    try {
+      const response = await axios.post(`http://localhost:8000/api/v1/order/checkoutSession/${courseId}`, {}, {
+        headers: {
+          'Authorization': 'Bearer ' + authToken
+        }
+      });
+      console.log(response);
+
+      // open stripe checkout
+      window.location.href = response.data.data.url;
+    } catch (err) {
+      console.log(err);
+      message.error(err.response.data.message);
+    }
   };
 
   if (loading) {
