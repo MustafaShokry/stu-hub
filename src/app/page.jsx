@@ -19,7 +19,6 @@ const { Header, Footer } = Layout;
 
 
 import mainImg from "./imgs/img1.jpg";
-import logo from "../../Assets/imgs/logo.png";
 import _1 from "./imgs/1.png";
 import _2 from "./imgs/3.png";
 import _3 from "./imgs/4.png";
