@@ -17,14 +17,8 @@ import { TwitterOutlined, FacebookOutlined, DribbbleOutlined, GithubOutlined } f
 
 const { Header, Footer } = Layout;
 
-// images
-import img1 from "../../Assets/imgs/1.png";
-import img2 from "../../Assets/imgs/arya_5_free_courses_ai_chatgpt_t.png";
-import img3 from "../../Assets/imgs/education-learning-knowledge-banner-frame.jpg";
-import img4 from "../../Assets/imgs/stream-3.png";
-import img5 from "../../Assets/imgs/stream-2.png";
+
 import mainImg from "./imgs/img1.jpg";
-import logo from "../../Assets/imgs/logo.png";
 import _1 from "./imgs/2.jpg";
 import _2 from "./imgs/3.jpg";
 import _3 from "./imgs/4.jpg";
