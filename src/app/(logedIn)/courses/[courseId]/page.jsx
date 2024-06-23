@@ -70,6 +70,111 @@
 // }
 
 // export default CourseOverview;
+
+// "use client";
+// import React, { useState, useEffect } from 'react';
+// import { Card, Typography, List, message, Spin } from 'antd';
+// import { Avatar, Space } from 'antd';
+// import axios from 'axios';
+// import ReactPlayer from 'react-player';
+// import styles from './CourseOverview.module.css'; // Assuming you have CSS modules enabled
+
+// const { Title, Paragraph } = Typography;
+// const { Meta } = Card;
+
+// function CourseOverview({ params }) {
+//     const [course, setCourse] = useState(null);
+//     const [videos, setVideos] = useState([]);
+//     const [loading, setLoading] = useState(true);
+//     const [error, setError] = useState(null);
+
+//     useEffect(() => {
+//         setLoading(true);
+//         setError(null);
+//         const fetchCourse = async () => {
+//             try {
+//                 const response = await axios.get(`http://localhost:8000/api/v1/course/${params.courseId}`);
+//                 const instructorResponse = await axios.get(`http://localhost:8000/api/v1/user/${response.data.data.instructor}`);
+//                 response.data.data.instructorName = instructorResponse.data.data.username;
+//                 response.data.data.image = instructorResponse.data.data.image;
+//                 setCourse(response.data.data);
+//                 const videosR = response.data.data.videos;
+//                 let videosRa = videosR.map((video, index) => ({ title: `Video ${index + 1}`, url: video }));
+//                 setVideos(videosRa);
+//                 setLoading(false);
+//             } catch (error) {
+//                 console.error(error);
+//                 if (error.response && error.response.data && error.response.data.errors) {
+//                     message.error(error.response.data.errors[0].msg);
+//                 } else {
+//                     message.error("An unexpected error occurred.");
+//                 }
+//                 setError(error);
+//                 setLoading(false);
+//             }
+//         };
+
+//         fetchCourse();
+//     }, [params.courseId]);
+
+//     if (loading) {
+//         return <div className={styles.loading}><Spin /></div>;
+//     }
+
+//     if (error) {
+//         return <p>{error.message}</p>;
+//     }
+
+//     return (
+//         <div
+//             style={{
+//                 width: '100%',
+//                 height: '100%',
+//                 display: 'flex',
+//                 justifyContent: 'center',
+//                 alignItems: 'center',
+//             }}
+//         >
+//             <Card title="Course Overview"
+//                 className={styles.courseCard}
+//             >
+
+
+//                 <Title level={4}><strong>Title:</strong> {course.title}</Title>
+//                 <Paragraph>
+//                     <strong>Description:</strong> {course.description}
+//                 </Paragraph>
+
+
+//                 <Meta
+//                     avatar={<Avatar src={course.image} />}
+//                     title={course.instructorName}
+//                     description="Instructor"
+//                 />
+
+
+
+
+
+
+//                 <Title level={5}>Videos:</Title>
+//                 <List
+//                     dataSource={videos}
+//                     renderItem={(video) => (
+//                         <List.Item>
+//                             <div className={styles.videoItem}>
+//                                 <div className={styles.videoTitle}>{video.title}</div>
+//                                 <ReactPlayer url={video.url} controls width="100%" />
+//                             </div>
+//                         </List.Item>
+//                     )}
+//                 />
+//             </Card>
+//         </div>
+//     );
+// }
+
+// export default CourseOverview;
 "use client";
 import React, { useState, useEffect } from 'react';
 import { Card, Typography, List, message, Spin, Avatar } from 'antd';
@@ -92,6 +197,9 @@ function CourseOverview({ params }) {
         const fetchCourse = async () => {
             try {
                 const response = await axios.get(`http://localhost:8000/api/v1/course/${params.courseId}`);
+                const instructorResponse = await axios.get(`http://localhost:8000/api/v1/user/${response.data.data.instructor}`);
+                response.data.data.instructorName = instructorResponse.data.data.username;
+                response.data.data.image = instructorResponse.data.data.image;
                 setCourse(response.data.data);
                 const videosR = response.data.data.videos;
                 let videosRa = videosR.map((video, index) => ({ title: `Video ${index + 1}`, url: video }));
@@ -113,7 +221,7 @@ function CourseOverview({ params }) {
     }, [params.courseId]);
 
     if (loading) {
-        return <div className={styles.loading}><Spin tip="Loading..." /></div>;
+        return <div className={styles.loading}><Spin /></div>;
     }
 
     if (error) {
